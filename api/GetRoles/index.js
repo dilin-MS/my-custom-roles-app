@@ -7,6 +7,9 @@ const roleGroupMappings = {
 };
 
 module.exports = async function (context, req) {
+    console.log("[dilin-debug] ### Calling /api/getRoutes function ###");
+    console.log("[dilin-debug] req:" + JSON.stringify(req));
+
     const user = req.body || {};
     const roles = [];
     
@@ -15,6 +18,7 @@ module.exports = async function (context, req) {
             roles.push(role);
         }
     }
+    console.log("[dilin-debug] roles:" + roles);
 
     context.res.json({
         roles
@@ -22,6 +26,8 @@ module.exports = async function (context, req) {
 }
 
 async function isUserInGroup(groupId, bearerToken) {
+    console.log("[dilin-debug] ### Calling isUserInGroup() ###");
+    console.log("[dilin-debug] groupId:" + groupId);
     const url = new URL('https://graph.microsoft.com/v1.0/me/memberOf');
     url.searchParams.append('$filter', `id eq '${groupId}'`);
     const response = await fetch(url, {
