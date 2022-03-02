@@ -34,14 +34,21 @@
     <hr>
     <pre></pre>
     <script>
-        async function getUserInfo() {
-            const response = await fetch('/.auth/me');
+        // async function getUserInfo() {
+        //     const response = await fetch('/.auth/me');
+        //     const user = await response.json();
+        //     const pre = document.querySelector('pre');
+        //     pre.textContent = JSON.stringify(user, null, 2);
+        // }
+        
+        async function callGetRolesFunc() {
+            const response = await fetch('/api/GetRoles');
             const user = await response.json();
             const pre = document.querySelector('pre');
             pre.textContent = JSON.stringify(user, null, 2);
         }
 
-        getUserInfo();
+        callGetRolesFunc();
     </script>
 </body>
 
