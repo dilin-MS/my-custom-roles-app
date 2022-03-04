@@ -2,11 +2,11 @@
     "routes": [
         {
             "route": "/admin/*",
-            "allowedRoles": [ "admin" ]
+            "allowedRoles": [ "dilinGithub" ]
         },
         {
             "route": "/authenticated/*",
-            "allowedRoles": [ "authenticated" ]
+            "allowedRoles": [ "roleB" ]
         }
     ],
     "auth": {

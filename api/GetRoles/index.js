@@ -1,10 +1,10 @@
 const fetch = require('node-fetch').default;
 
 // add role names to this object to map them to group ids in your AAD tenant
-const roleGroupMappings = {
-    'admin': '997c67da-4c66-485e-8925-97e405ccd501',
-    'reader': '997c67da-4c66-485e-8925-97e405ccd501'
-};
+// const roleGroupMappings = {
+//     'admin': '997c67da-4c66-485e-8925-97e405ccd501',
+//     'reader': '997c67da-4c66-485e-8925-97e405ccd501'
+// };
 
 module.exports = async function (context, req) {
     console.log("[dilin-debug] ### Calling /api/getRoutes function ###");
@@ -12,12 +12,21 @@ module.exports = async function (context, req) {
 
     const user = req.body || {};
     const roles = [];
-    
-    for (const [role, groupId] of Object.entries(roleGroupMappings)) {
-        if (await isUserInGroup(groupId, user.accessToken)) {
-            roles.push(role);
-        }
+    const claims = user.claims;
+
+    const githubLoginClaim = claims.filter(item => item.typ === "urn:github:login");
+    console.log("[dilin-debug] githubLoginClaim:" + JSON.stringify(githubLoginClaim));
+
+    const githubLoginName = githubLoginClaim.val;
+    if (githubLoginName === "dilin-MS") {
+        roles.push("dilinGithub");
     }
+    
+    // for (const [role, groupId] of Object.entries(roleGroupMappings)) {
+    //     if (await isUserInGroup(groupId, user.accessToken)) {
+    //         roles.push(role);
+    //     }
+    // }
     console.log("[dilin-debug] roles:" + roles);
 
     context.res.json({
