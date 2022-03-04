@@ -19,7 +19,8 @@ module.exports = async function (context, req) {
 
     const githubLoginName = githubLoginClaim.val;
     if (githubLoginName === "dilin-MS") {
-        roles.push("dilinGithub");
+        roles.push("admin");
+        roles.push("dilingithub");
     }
     
     // for (const [role, groupId] of Object.entries(roleGroupMappings)) {
@@ -34,23 +35,23 @@ module.exports = async function (context, req) {
     });
 }
 
-async function isUserInGroup(groupId, bearerToken) {
-    console.log("[dilin-debug] ### Calling isUserInGroup() ###");
-    console.log("[dilin-debug] groupId:" + groupId);
-    const url = new URL('https://graph.microsoft.com/v1.0/me/memberOf');
-    url.searchParams.append('$filter', `id eq '${groupId}'`);
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${bearerToken}`
-        },
-    });
+// async function isUserInGroup(groupId, bearerToken) {
+//     console.log("[dilin-debug] ### Calling isUserInGroup() ###");
+//     console.log("[dilin-debug] groupId:" + groupId);
+//     const url = new URL('https://graph.microsoft.com/v1.0/me/memberOf');
+//     url.searchParams.append('$filter', `id eq '${groupId}'`);
+//     const response = await fetch(url, {
+//         method: 'GET',
+//         headers: {
+//             'Authorization': `Bearer ${bearerToken}`
+//         },
+//     });
 
-    if (response.status !== 200) {
-        return false;
-    }
+//     if (response.status !== 200) {
+//         return false;
+//     }
 
-    const graphResponse = await response.json();
-    const matchingGroups = graphResponse.value.filter(group => group.id === groupId);
-    return matchingGroups.length > 0;
-}
+//     const graphResponse = await response.json();
+//     const matchingGroups = graphResponse.value.filter(group => group.id === groupId);
+//     return matchingGroups.length > 0;
+// }

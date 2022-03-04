@@ -5,8 +5,8 @@
             "allowedRoles": [ "admin" ]
         },
         {
-            "route": "/dilinGithub/*",
-            "allowedRoles": [ "dilinGithub" ]
+            "route": "/dilingithub/*",
+            "allowedRoles": [ "dilingithub" ]
         },
         {
             "route": "/authenticated/*",
